@@ -62,3 +62,49 @@ export const signIn = async (req: Request, res: Response) => {
     res.status(500).json({ status: 'error', message: 'Internal server error' });
   }
 };
+
+// import { Request, Response } from 'express';
+// import { CreateUserDto } from '../../DTOs/user.dto';
+// import { User } from '../../models/user';
+// import { hashPassword } from '../../utils/encryptPassword';
+// import { emailVerification } from '../../utils/emails/emailVerification';
+// import { emailVerifyCreateJWT } from '../../configs/jwt';
+
+// export const signIn = async (req: Request, res: Response) => {
+//   const { firstName, lastName, email, password, accountType } = req.body;
+
+//   // Create DTO instance
+//   const createUserDto = new CreateUserDto({ firstName, lastName, email, password, accountType });
+
+//   // Validate DTO
+//   if (!createUserDto.isValid()) {
+//     return res.status(400).json({ message: 'Invalid request data' });
+//   }
+
+//   try {
+//     const talent = await User.findOne({ email });
+//     if (talent) {
+//       if (talent.metaData.isActive === false) {
+//         return res.status(400).json({
+//           message: 'Please verify your email',
+//         });
+//       }
+//       return res.status(400).json({
+//         message: 'User already exist',
+//       });
+//     } else {
+//       const hashedPassword = await hashPassword(password);
+//       const newUser = new User({
+//         ...CreateUserDto,
+//         // accountType: accountType,
+//         // firstName,
+//         // lastName,
+//         // email,
+//         // password: hashedPassword,
+//       });
+//     }
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ status: 'error', message: 'Internal server error' });
+//   }
+// };
