@@ -1,0 +1,1 @@
+This is project is a real estate web application that bridges the gap between landlords/agents and the house hunters. This app allow hunters to either speak with agents or directly with landlords. The app also goes beyond house rentals and encompass house or land sales.
