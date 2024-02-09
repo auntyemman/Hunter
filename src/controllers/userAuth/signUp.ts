@@ -10,14 +10,14 @@ import { User } from '../../models/user';
 import { emailVerification } from '../../utils/emails/emailVerification';
 import { emailVerifyCreateJWT } from '../../configs/jwt';
 
-export const signIn = async (req: Request, res: Response) => {
+export const signUp = async (req: Request, res: Response) => {
   const { firstName, lastName, email, password, accountType } = req.body;
   try {
     const talent = await User.findOne({ email });
     if (talent) {
       if (talent.metaData.isActive === false) {
         return res.status(400).json({
-          message: 'Please verify your email',
+          message: 'Please verify your email.',
         });
       }
       return res.status(400).json({
@@ -58,7 +58,6 @@ export const signIn = async (req: Request, res: Response) => {
       });
     }
   } catch (error) {
-    console.log(error);
     res.status(500).json({ status: 'error', message: 'Internal server error' });
   }
 };

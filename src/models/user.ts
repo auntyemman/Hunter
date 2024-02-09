@@ -67,6 +67,7 @@ const userSchema = new Schema<IUser>(
     accountType: {
       type: String,
       trim: true,
+      enum: ['hunter', 'agent', 'landlord'],
       default: 'hunter',
       lowercase: true,
     },

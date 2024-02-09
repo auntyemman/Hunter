@@ -4,7 +4,7 @@ import helmet from 'helmet';
 import { config } from 'dotenv';
 
 import { mongoDBConnection } from './configs/mongoDB';
-// import { router } from './routes';
+import { router } from './routes';
 
 config();
 const app: Application = express();
@@ -26,7 +26,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(helmet());
 
 /*----------------------------app routes-----------------------------------------------------------------*/
-// app.use('/v1', router);
+app.use('/v1', router);
 /*----------------------------app server url-------------------------------------------------------------*/
 app.get('/', (req: Request, res: Response) => {
   res.status(200).json({

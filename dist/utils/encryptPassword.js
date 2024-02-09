@@ -12,22 +12,20 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.mongoDBConnection = void 0;
-const mongoose_1 = __importDefault(require("mongoose"));
-const dotenv_1 = require("dotenv");
-(0, dotenv_1.config)();
-const mongoDBConnection = () => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        yield mongoose_1.default.connect(process.env.MONGODB_URI, {
-        // useNewUrlParser: true,
-        // useUnifiedTopology: true,
-        });
-        console.log('Connected to MongoDB');
-    }
-    catch (error) {
-        console.log(error);
-        process.exit(1);
-    }
-});
-exports.mongoDBConnection = mongoDBConnection;
-//# sourceMappingURL=mongoDB.js.map
+exports.comparePasswords = exports.hashPassword = void 0;
+const argon2_1 = __importDefault(require("argon2"));
+// Function to hash a password
+function hashPassword(password) {
+    return __awaiter(this, void 0, void 0, function* () {
+        return argon2_1.default.hash(password);
+    });
+}
+exports.hashPassword = hashPassword;
+// Function to compare a password with its hash
+function comparePasswords(password, hashedPassword) {
+    return __awaiter(this, void 0, void 0, function* () {
+        return argon2_1.default.verify(hashedPassword, password);
+    });
+}
+exports.comparePasswords = comparePasswords;
+//# sourceMappingURL=encryptPassword.js.map

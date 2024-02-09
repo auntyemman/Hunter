@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import { config } from 'dotenv';
 
-import { JWTPayload } from './customTypes';
+import { JWTPayload } from '../utils/customTypes';
 
 config();
 const secret = process.env.JWT_SECRET as string;
