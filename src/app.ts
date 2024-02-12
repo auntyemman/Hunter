@@ -2,6 +2,7 @@ import express, { Request, Response, Application } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import { config } from 'dotenv';
+import 'reflect-metadata';
 
 import { mongoDBConnection } from './configs/mongoDB';
 import { router } from './routes';

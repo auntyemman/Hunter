@@ -29,9 +29,7 @@ const emailVerification = (email, link) => __awaiter(void 0, void 0, void 0, fun
     nodeMailer_1.transporter
         .sendMail(mailOptions)
         .then(() => { })
-        .catch((error) => {
-        console.log(error);
-    });
+        .catch(() => { });
 });
 exports.emailVerification = emailVerification;
 //# sourceMappingURL=emailVerification.js.map
