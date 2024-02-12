@@ -1,7 +1,13 @@
 import { Router } from 'express';
 export const auth: Router = Router();
 
-import { signUp } from '../controllers/userAuth';
+import {
+    signUp,
+    signIn,
+} from '../controllers/userAuth';
 
-/**---------------------------------SignUp requests----------------------------------------- */
+/**---------------------------------SignUp request----------------------------------------- */
 auth.post('/signup', signUp);
+
+/**---------------------------------SignIn request----------------------------------------- */
+auth.post('/signin', signIn);
