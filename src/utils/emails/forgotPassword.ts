@@ -10,9 +10,9 @@ export const forgotPasswordMail = async (email: string, code: string) => {
   const processedHTML = htmlContent.replace('%OTP_CODE%', code);
 
   const mailOptions: SendMailOptions = {
-    from: `Marketing Campaign <smtp2@hrdek.com>`,
+    from: `Hunter <smtp2@hrdek.com>`,
     to: email,
-    subject: 'Your Campaign account password reset code',
+    subject: 'Your Hunter account password reset code',
     html: processedHTML,
   };
 
