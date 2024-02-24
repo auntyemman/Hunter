@@ -20,7 +20,7 @@ export const forgotPassword = async (req: Request, res: Response) => {
         const code = verificationCode();
         user.metaData.verificationCode = code;
         await user.save();
-        await forgotPasswordMail(email, code);
+        await forgotPasswordMail(email, user.firstName, code);
         res.status(200).json({
           message: `Verification code has been sent to ${email}`,
           code,
