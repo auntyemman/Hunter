@@ -11,6 +11,7 @@ import { SignUpDTO } from '../DTOs/signUp.dto';
 export class UserService {
   constructor(private readonly UserModel: typeof User) {}
 
+  /*-------------------------------------------Repository-------------------------------------------*/
   async getUserById(userId: string): Promise<IUser | null> {
     const user = await this.UserModel.findById(userId);
     if (!user) {
@@ -26,6 +27,7 @@ export class UserService {
     return user;
   }
 
+  /*-------------------------------------------Service-------------------------------------------*/
   async createUser(signUpData: SignUpDTO): Promise<IUser> {
     // Transform DTO to Mongoose model
     const newUser = plainToClass(SignUpDTO, signUpData);
@@ -47,6 +49,7 @@ export class UserService {
     const errors = await validate(newUser);
     if (errors.length > 0) {
       const constraintErrors = errors.map((error) => {
+        console.error(error);
         const { constraints } = error;
         return constraints;
       });
@@ -87,7 +90,7 @@ export class UserService {
       throw new Error('User not found');
     }
 
-    const updatedUser = plainToClass(User, signUpData, { excludeExtraneousValues: true }); // Transform DTO to Mongoose model
+    const updatedUser = plainToClass(User, signUpData); // Transform DTO to Mongoose model
     const updatedUserData = updatedUser.toObject();
 
     await this.UserModel.findByIdAndUpdate(userId, updatedUserData);

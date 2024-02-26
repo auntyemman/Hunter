@@ -142,7 +142,7 @@ const userSchema = new Schema<IUser>(
       verificationCode: { type: String, default: '' },
       isActive: { type: Boolean, default: false },
       createdBy: { type: Schema.Types.ObjectId, ref: 'User' },
-      lastOnline: { type: Date, default: Date.now },
+      lastOnline: { type: Date },
     },
   },
   { timestamps: true },
