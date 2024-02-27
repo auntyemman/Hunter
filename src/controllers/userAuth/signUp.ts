@@ -1,13 +1,13 @@
 import { Request, Response } from 'express';
 
-import { User } from '../../models/user';
+// import { User } from '../../models/user';
 import { UserService } from '../../services/userService';
 
 export const signUp = async (req: Request, res: Response) => {
   try {
     const signUpData = req.body;
     // If data is valid, pass it to the service for further processing
-    const userService = new UserService(User);
+    const userService = new UserService();
     const newUser = await userService.createUser(signUpData);
     // Send response
     return res.status(201).json({
