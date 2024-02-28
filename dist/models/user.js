@@ -10,10 +10,10 @@ const userSchema = new mongoose_1.Schema({
         default: 'hunter',
         lowercase: true,
     },
-    firstName: { type: String, trim: true, index: 'text' },
-    lastName: { type: String, trim: true, index: 'text' },
-    middleName: { type: String, trim: true, index: 'text' },
-    fullName: { type: String, trim: true, index: 'text' },
+    firstName: { type: String, trim: true },
+    lastName: { type: String, trim: true },
+    middleName: { type: String, trim: true },
+    fullName: { type: String, trim: true },
     email: { type: String, trim: true, unique: true, lowercase: true },
     password: { type: String, trim: true, minlength: 8 },
     phone: { type: String, trim: true },
@@ -42,14 +42,6 @@ const userSchema = new mongoose_1.Schema({
             zipCode: { type: String, trim: true },
         },
     ],
-    education: [
-        {
-            institution: { type: String, trim: true },
-            degree: { type: String, trim: true },
-            grade: { type: String, trim: true },
-            gradYear: { type: String, trim: true },
-        },
-    ],
     openTo: [
         {
             type: String,
@@ -57,24 +49,11 @@ const userSchema = new mongoose_1.Schema({
             lowercase: true,
         },
     ],
-    favorites: [
-        {
-            favedBy: { type: mongoose_1.Schema.Types.ObjectId, ref: 'User' },
-        },
-    ],
-    ratings: [
-        {
-            ratedBy: { type: mongoose_1.Schema.Types.ObjectId, ref: 'User' },
-            house: { type: mongoose_1.Schema.Types.ObjectId, ref: 'House' },
-            rating: { type: Number, min: 0, max: 5 },
-        },
-    ],
     averageRating: { type: Number, default: 0 },
     metaData: {
         verificationCode: { type: String, default: '' },
         isActive: { type: Boolean, default: false },
-        createdBy: { type: mongoose_1.Schema.Types.ObjectId, ref: 'User' },
-        lastOnline: { type: Date, default: Date.now },
+        lastOnline: { type: Date },
     },
 }, { timestamps: true });
 exports.User = (0, mongoose_1.model)('User', userSchema);

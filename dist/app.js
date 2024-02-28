@@ -7,6 +7,7 @@ const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const helmet_1 = __importDefault(require("helmet"));
 const dotenv_1 = require("dotenv");
+require("reflect-metadata");
 const mongoDB_1 = require("./configs/mongoDB");
 const routes_1 = require("./routes");
 (0, dotenv_1.config)();
