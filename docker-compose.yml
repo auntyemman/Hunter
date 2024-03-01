@@ -1,0 +1,42 @@
+version: "3.9"
+
+services:
+  # Application service
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"  # Change port if needed
+    depends_on:
+      - mongodb
+    environment:
+      # Store connection string in a secret
+      MONGODB_URI: ${MONGODB_URI}  # Reference secret from environment
+    networks:
+      - app-network  # Optional (comment out if unused)
+
+  # MongoDB service
+  mongodb:
+    image: mongo:latest  # Use a specific version for reproducibility
+    ports:
+      - "27017:27017"  # Expose MongoDB port
+    volumes:
+      - mongodb_data:/data/db  # Persist MongoDB data
+    networks:
+      - app-network  # Optional (comment out if unused)
+
+secrets:
+  # Define secret for MongoDB connection string
+  mongodb_uri:
+    file: .env
+    # Replace with your actual connection string
+
+networks:
+  # Optional network (comment out if unused)
+  app-network:
+    driver: bridge
+
+volumes:
+  mongodb_data:
+    driver: local
