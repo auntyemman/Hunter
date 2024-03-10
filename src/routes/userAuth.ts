@@ -8,7 +8,9 @@ import {
   forgotPassword,
   confirmCode,
   resetPassword,
+  updateProfile,
 } from '../controllers/userAuth';
+import { authUser } from '../middlewares/userAuth';
 
 /**---------------------------------SignUp request----------------------------------------- */
 auth.post('/signup', signUp);
@@ -27,3 +29,6 @@ auth.post('/confirm-code', confirmCode);
 
 /**---------------------------------Reset password request----------------------------------------- */
 auth.post('/reset-password', resetPassword);
+
+/**---------------------------------Update profile request----------------------------------------- */
+auth.post('/profile', authUser, updateProfile);

@@ -1,15 +1,17 @@
 import { Request, Response } from 'express';
 
-import { UserService } from '../../../services/userService';
+import { UserService } from '../../services/user.service';
+import { validateRequest } from '../../utils/requestValidator';
+import { ProfileDTO } from '../../DTOs/users/profileUpdate.dto';
+import { UserRepository } from '../../repossitory/user.repository';
 
 export const updateProfile = async (req: Request, res: Response) => {
   const userId = res.locals.user.userId;
   try {
-    const profileData = req.body;
-    // If data is valid, pass it to the service for further processing
-    const userService = new UserService();
-    const newUser = await userService.updateUser(userId, profileData);
-    // Send response
+    const validated = await validateRequest(ProfileDTO, req.body);
+    const userRepository = new UserRepository();
+    const userService = new UserService(userRepository);
+    const newUser = await userService.updateUser(userId, validated);
     return res.status(200).json({
       status: 'success',
       message: 'profile updated',

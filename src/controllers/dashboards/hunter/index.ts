@@ -1,3 +1,3 @@
-import { updateProfile } from './profile';
+// import { updateProfile } from '../../userAuth/profile';
 
-export { updateProfile };
+// export { updateProfile };

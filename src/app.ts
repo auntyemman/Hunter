@@ -8,8 +8,8 @@ import { mongoDBConnection } from './configs/mongoDB';
 import { router } from './routes';
 
 config();
-const app: Application = express();
-const PORT = process.env.PORT || 3232;
+export const app: Application = express();
+// const PORT = process.env.PORT || 3232;
 mongoDBConnection();
 
 /*----------------------------app level middlewares-----------------------------------------------------*/
@@ -38,6 +38,6 @@ app.get('*', (req: Request, res: Response) => {
   res.status(404).json({ message: 'route not found in this domain' });
 });
 
-app.listen(PORT, () => {
-  console.log(`Server started on port ${PORT}`);
-});
+// app.listen(PORT, () => {
+//   console.log(`Server started on port ${PORT}`);
+// });

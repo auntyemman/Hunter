@@ -1,5 +1,4 @@
-export function calculateAge(dateOfBirth: string): number {
-  // Check if the dateOfBirth is empty or null
+export function calculateAge(dateOfBirth: string | Date): number {
   if (!dateOfBirth) {
     return 0; // Return zero for empty date of birth
   }

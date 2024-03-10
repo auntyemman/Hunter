@@ -17,7 +17,7 @@ export const forgotPasswordCreateJWT = (payload: object) => {
   return token;
 };
 
-export const emailVerifyCreateJWT = (payload: object) => {
+export const emailVerifyCreateJWT = async (payload: object) => {
   // consider using this custom type payload if this does not work
   const token = jwt.sign(payload, secret, { expiresIn: '48h' });
   return token;

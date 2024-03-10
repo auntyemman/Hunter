@@ -1,15 +1,16 @@
 import { Request, Response } from 'express';
 
-// import { User } from '../../models/user';
-import { UserService } from '../../services/userService';
+import { UserService } from '../../services/user.service';
+import { validateRequest } from '../../utils/requestValidator';
+import { SignUpDTO } from '../../DTOs/users/signUp.dto';
+import { UserRepository } from '../../repossitory/user.repository';
 
 export const signUp = async (req: Request, res: Response) => {
   try {
-    const signUpData = req.body;
-    // If data is valid, pass it to the service for further processing
-    const userService = new UserService();
-    const newUser = await userService.createUser(signUpData);
-    // Send response
+    const validated = await validateRequest(SignUpDTO, req.body);
+    const userRepository = new UserRepository();
+    const userService = new UserService(userRepository);
+    const newUser = await userService.createUser(validated);
     return res.status(201).json({
       status: 'success',
       message: `Verification link sent to your email, please check your email.`,

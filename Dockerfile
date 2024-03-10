@@ -8,7 +8,7 @@ WORKDIR /app
 COPY package*.json yarn.lock ./
 
 # Expose the port
-EXPOSE 2034
+EXPOSE 2024
 
 # Install dependencies
 RUN yarn install
