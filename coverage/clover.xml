@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1710090366989" clover="3.2.0">
-  <project timestamp="1710090366989" name="All files">
+<coverage generated="1710109957898" clover="3.2.0">
+  <project timestamp="1710109957899" name="All files">
     <metrics statements="1062" coveredstatements="531" conditionals="22" coveredconditionals="20" methods="42" coveredmethods="10" elements="1126" coveredelements="561" complexity="0" loc="1062" ncloc="1062" packages="11" files="28" classes="28"/>
     <package name="DTOs.users">
       <metrics statements="124" coveredstatements="124" conditionals="2" coveredconditionals="2" methods="0" coveredmethods="0"/>
@@ -627,9 +627,9 @@
         <line num="104" count="1" type="stmt"/>
       </file>
     </package>
-    <package name="repossitory">
+    <package name="repositories">
       <metrics statements="48" coveredstatements="11" conditionals="0" coveredconditionals="0" methods="6" coveredmethods="0"/>
-      <file name="user.repository.ts" path="C:\Users\Developer\Mole\Hunter\src\repossitory\user.repository.ts">
+      <file name="user.repository.ts" path="C:\Users\Developer\Mole\Hunter\src\repositories\user.repository.ts">
         <metrics statements="48" coveredstatements="11" conditionals="0" coveredconditionals="0" methods="6" coveredmethods="0"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>

@@ -21,15 +21,12 @@ export class UserRepository implements IUserRepository {
     }
     return user;
   }
-  async getByEmail(email: string): Promise<IUser | null> {
+  async getByEmail(email: string): Promise<IUser> {
     const user = await User.findOne({ email });
     if (!user) {
-      return user;
+      throw new Error('User not found');
     }
-    if (user.metaData.isActive === false) {
-      throw new Error('Please verify your email, check your email');
-    }
-    throw new Error("User doesn't exist");
+    return user;
   }
   async getOne(id: string): Promise<IUser> {
     const user = await User.findById(id);

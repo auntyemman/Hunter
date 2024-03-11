@@ -1,14 +1,25 @@
+import base64url from 'base64url';
+
 import { IUser } from '../models/user';
 import { hashPassword } from '../utils/encryptPassword';
 import { calculateAge } from '../utils/calculateAge';
 import { validatePhoneNumber } from '../utils/verifyPhoneNumber';
 import { IUserRepository } from '../interface/userRepository.interface';
 import { sendVerifyEmail } from '../utils/sendVerifyEmail';
+import { verifyJWT } from '../configs/jwt';
+import { forgotPasswordMail } from '../utils/emails/forgotPassword';
+import { verificationCode } from '../utils/verificationCode';
 
 export class UserService {
   constructor(private readonly User: IUserRepository) {}
   async createUser(payload: IUser): Promise<IUser> {
-    await this.User.getByEmail(payload.email);
+    const user = await this.User.getByEmail(payload.email);
+    if (user) {
+      if (user.metaData.isActive === false) {
+        throw new Error('Please verify your email, check your email');
+      }
+      throw new Error('User already exists');
+    }
     const hashedPassword = await hashPassword(payload.password);
     payload.password = hashedPassword;
     const newUser = await this.User.create(payload);
@@ -17,12 +28,34 @@ export class UserService {
   }
 
   async updateUser(userId: string, payload: IUser): Promise<IUser | null> {
-    await this.User.getOne(userId);
     payload.age = calculateAge(payload.DOB);
     payload.phone = validatePhoneNumber(payload.phone);
     payload.alternatePhone = validatePhoneNumber(payload.alternatePhone);
     const updatedUserData = JSON.parse(JSON.stringify(payload));
     const user = await this.User.update(userId, updatedUserData);
+    return user;
+  }
+
+  async verifyUserEmail(token: string): Promise<IUser> {
+    const decodedToken = base64url.decode(token);
+    const decoded = await verifyJWT(decodedToken);
+    const { userId } = decoded;
+    const user = await this.User.getOne(userId);
+    if (user.metaData.isActive === true) {
+      throw new Error('Email already verified');
+    }
+    return user;
+  }
+
+  async forgotUSerPassword(email: string): Promise<IUser | null> {
+    const user = await this.User.getByEmail(email);
+    if (!user) {
+      throw new Error('User not found');
+    }
+    const code = verificationCode();
+    user.metaData.verificationCode = code;
+    await this.User.update(user._id, user);
+    await forgotPasswordMail(email, user.firstName, code);
     return user;
   }
 }

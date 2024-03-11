@@ -23,12 +23,12 @@ export const emailVerifyCreateJWT = async (payload: object) => {
   return token;
 };
 
-export const verifyJWT = (token: string) => {
+export const verifyJWT = async (token: string) => {
   try {
-    // Verify the JWT token using your secret key
     const decoded = jwt.verify(token, secret) as JWTPayload;
-
-    // If verification is successful, return the decoded payload
+    if (!decoded) {
+      throw new Error('Invalid token');
+    }
     return decoded;
   } catch (error) {
     // Handle token verification errors

@@ -11,7 +11,7 @@ export const authUser = async (req: Request, res: Response, next: NextFunction) 
   }
   const token = authorizationHeader.split(' ')[1];
   try {
-    const decoded = verifyJWT(token);
+    const decoded = await verifyJWT(token);
     res.locals.user = decoded; // Attach user data to the request
     // Updating the last online status
     const user = await User.findOne({ _id: decoded.userId });
