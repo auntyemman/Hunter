@@ -1,7 +1,7 @@
 import base64url from 'base64url';
 
 import { IUser } from '../models/user';
-import { hashPassword } from '../utils/encryptPassword';
+import { hashPassword, comparePasswords } from '../utils/encryptPassword';
 import { calculateAge } from '../utils/calculateAge';
 import { validatePhoneNumber } from '../utils/verifyPhoneNumber';
 import { IUserRepository } from '../interface/userRepository.interface';
@@ -56,6 +56,45 @@ export class UserService {
     user.metaData.verificationCode = code;
     await this.User.update(user._id, user);
     await forgotPasswordMail(email, user.firstName, code);
+    return user;
+  }
+
+  async resetUserPassword(email: string, password: string): Promise<IUser> {
+    const user = await this.User.getByEmail(email);
+    if (!user) {
+      throw new Error('User not found');
+    }
+    const hashedPassword = await hashPassword(password);
+    user.password = hashedPassword;
+    await this.User.update(user._id, user);
+    return user;
+  }
+
+  async confirmUserCode(email: string, code: string): Promise<IUser> {
+    const user = await this.User.getByEmail(email);
+    if (!user) {
+      throw new Error('User not found');
+    }
+    if (user.metaData.verificationCode !== code) {
+      throw new Error('Code does not match or invalid code');
+    }
+    user.metaData.verificationCode = '';
+    await this.User.update(user._id, user);
+    return user;
+  }
+
+  async signUserIn(email: string, password: string): Promise<IUser> {
+    const user = await this.User.getByEmail(email);
+    if (!user) {
+      throw new Error('User not found');
+    }
+    const passwordMatch = await comparePasswords(password, user.password);
+    if (!passwordMatch) {
+      throw new Error('Wrong password');
+    }
+    if (user.metaData.isActive === false) {
+      throw new Error('Please verify your email, check your email');
+    }
     return user;
   }
 }

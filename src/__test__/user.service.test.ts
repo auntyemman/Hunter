@@ -2,7 +2,7 @@ import request from 'supertest';
 import express from 'express';
 import 'reflect-metadata';
 
-import { auth } from '../routes/userAuth';
+import { auth } from '../routes/user.route';
 // import { app } from '../app';
 import { UserService } from '../services/user.service';
 import { User } from '../models/user';

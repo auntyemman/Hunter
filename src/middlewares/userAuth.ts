@@ -19,7 +19,7 @@ export const authUser = async (req: Request, res: Response, next: NextFunction) 
       user.metaData.lastOnline = new Date();
       await user.save();
     }
-    next(); // Allow the request to proceed
+    next();
   } catch (err) {
     next(err);
     return sendUnauthorizedResponse(res, 'Invalid token or authorization header');

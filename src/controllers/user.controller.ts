@@ -80,4 +80,54 @@ export class UserController {
       errorHandler(error, req, res);
     }
   }
+
+  async resetPassword(req: Request, res: Response): Promise<object | void> {
+    const { password } = req.body;
+    const { email } = req.query as { email: string };
+    try {
+      const user = await this.userService.resetUserPassword(email, password);
+      if (!user) {
+        return res.status(400).json({ message: 'User not found with the given email' });
+      }
+      return res.status(200).json({
+        status: 'success',
+        message: 'Password reset successfully.',
+        data: user,
+      });
+    } catch (error: any) {
+      errorHandler(error, req, res);
+    }
+  }
+
+  async confirmUserCode(req: Request, res: Response): Promise<object | void> {
+    const { code } = req.body;
+    const { email } = req.query as { email: string };
+    try {
+      const user = await this.userService.confirmUserCode(email, code);
+      if (!user) {
+        return res.status(400).json({ message: 'User not found with the given email' });
+      }
+      return res.status(200).json({
+        status: 'success',
+        message: 'Code verified successfully.',
+        data: user,
+      });
+    } catch (error: any) {
+      errorHandler(error, req, res);
+    }
+  }
+
+  async signIn(req: Request, res: Response): Promise<object | void> {
+    const { email, password } = req.body;
+    try {
+      const user = await this.userService.signUserIn(email, password);
+      return res.status(200).json({
+        status: 'success',
+        message: 'Logged in successfully',
+        data: user,
+      });
+    } catch (error: any) {
+      errorHandler(error, req, res);
+    }
+  }
 }
